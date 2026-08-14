@@ -880,15 +880,6 @@ brcmf_vap_transmit(if_t ifp, struct mbuf *m)
 	struct ieee80211vap *vap = if_getsoftc(ifp);
 	struct ieee80211com *ic = vap->iv_ic;
 	struct brcmf_softc *sc = ic->ic_softc;
-	struct ether_header *eh;
-	uint16_t etype = 0;
-
-	if (m->m_len >= sizeof(*eh)) {
-		eh = mtod(m, struct ether_header *);
-		etype = ntohs(eh->ether_type);
-	}
-	device_printf(sc->dev, "vap_transmit: state=%d etype=0x%04x len=%u\n",
-	    vap->iv_state, etype, m->m_pkthdr.len);
 
 	if (vap->iv_state != IEEE80211_S_RUN) {
 		/*
